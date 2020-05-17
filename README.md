@@ -29,6 +29,15 @@ Here is the list of APIs available as part of this SpringBoot Application
 4. http://localhost:8080/v1/employees/{empId}/add POST
 ```
 
+## Related Links
+
+```python
+1. http://localhost:8080/swagger-ui.html
+2. http://localhost:8080/health
+3. http://localhost:8080/info
+4. http://localhost:8080/metrics
+```
+
 ## Run Command
 
 Please make sure Employees.xml file exiting in your classpath.
