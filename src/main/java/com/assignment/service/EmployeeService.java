@@ -31,4 +31,12 @@ public interface EmployeeService {
 	 * @return true, if successful
 	 */
 	boolean deleteEmployee(long empId);
+
+	/**
+	 * Adds the employee.
+	 *
+	 * @param empId the emp id
+	 * @param employee the employee
+	 */
+	boolean addEmployee(long empId, Employee employee);
 }

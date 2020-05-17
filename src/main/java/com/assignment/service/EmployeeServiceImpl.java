@@ -80,4 +80,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.assignment.service.EmployeeService#addEmployee(long, com.assignment.model.Employee)
+	 */
+	@Override
+	public boolean addEmployee(long empId, Employee employee) {
+		logger.info("addEmployee method EmployeeServiceImpl invoked");
+		try {
+			return XMLParser.addEmployee(XML_FILE_PATH, empId, employee);
+		} catch (Exception e) {
+			throw new EmployeeNotFoundException(e.getMessage());
+		}
+		
+	}
+
 }

@@ -22,6 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.assignment.exception.DuplicateRecordException;
 import com.assignment.exception.EmployeeNotFoundException;
 import com.assignment.model.Employee;
 
@@ -43,6 +44,7 @@ public final class XMLParser {
 	/**
 	 * Parses the employees XML.
 	 *
+	 * @param xmlFilePath the xml file path
 	 * @return the list
 	 * @throws ParserConfigurationException the parser configuration exception
 	 * @throws SAXException                 the SAX exception
@@ -75,6 +77,7 @@ public final class XMLParser {
 	/**
 	 * Creates the document builder factory.
 	 *
+	 * @param xmlFilePath the xml file path
 	 * @return the document
 	 * @throws ParserConfigurationException the parser configuration exception
 	 * @throws SAXException                 the SAX exception
@@ -92,7 +95,8 @@ public final class XMLParser {
 	/**
 	 * Removes the employee.
 	 *
-	 * @param empId the emp id
+	 * @param xmlFilePath the xml file path
+	 * @param empId       the emp id
 	 * @return true, if successful
 	 * @throws Exception the exception
 	 */
@@ -122,9 +126,60 @@ public final class XMLParser {
 	}
 
 	/**
+	 * Adds the employee.
+	 *
+	 * @param xmlFilePath the xml file path
+	 * @param empId       the emp id
+	 * @param employee    the employee
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
+	public static boolean addEmployee(String xmlFilePath, long empId, Employee employee) throws Exception {
+		Document document = createDocumentBuilderFactory(xmlFilePath);
+		document.getDocumentElement().normalize();
+		NodeList nList = document.getElementsByTagName("employee");
+		boolean isEmpExists = false;
+		boolean addFlag = false;
+		for (int temp = 0; temp < nList.getLength(); temp++) {
+			if (!addFlag) {
+				Node node = nList.item(temp);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) node;
+					if (eElement.getAttribute("id").equals(String.valueOf(empId))) {
+						isEmpExists = true;
+						break;
+					}
+					if (temp == nList.getLength() - 1) {
+						Element empElement = document.createElement("employee");
+						empElement.setAttribute("id", String.valueOf(employee.getId()));
+						Element name = document.createElement("name");
+						name.appendChild(document.createTextNode(employee.getName()));
+						empElement.appendChild(name);
+						Element age = document.createElement("age");
+						age.appendChild(document.createTextNode(String.valueOf(employee.getAge())));
+						empElement.appendChild(age);
+						Element designation = document.createElement("designation");
+						designation.appendChild(document.createTextNode(employee.getDesignation()));
+						empElement.appendChild(designation);
+						eElement.getParentNode().appendChild(empElement);
+						addFlag = true;
+					}
+				}
+			}
+		}
+		if (isEmpExists) {
+			throw new DuplicateRecordException("Employee Details Already Exists");
+		}
+		document.normalize();
+		prettyPrint(xmlFilePath, document);
+		return true;
+	}
+
+	/**
 	 * Pretty print.
 	 *
-	 * @param xml the xml
+	 * @param xmlFilePath the xml file path
+	 * @param xml         the xml
 	 * @throws Exception the exception
 	 */
 	public static final void prettyPrint(String xmlFilePath, Document xml) throws Exception {
@@ -133,5 +188,4 @@ public final class XMLParser {
 		tf.setOutputProperty(OutputKeys.INDENT, "yes");
 		tf.transform(new DOMSource(xml), new StreamResult(xmlFilePath));
 	}
-
 }

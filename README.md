@@ -10,11 +10,12 @@ In this SpringBoot Application have implemented the following features
 1. SpringBoot 2.3 (Latest version)
 2. Java8
 3. Swagger2 Documentation
-4. SpringBoot Actuator Endpoints
+4. SpringBoot Actuator End points
 5. Spring AOP
 6. Logger
 7. Global Exception Handler
 8. Filter
+9. Lambok for DTOs
 ```
 
 ## Available APIs
@@ -25,16 +26,10 @@ Here is the list of APIs available as part of this SpringBoot Application
 1. http://localhost:8080/v1/employees GET
 2. http://localhost:8080/v1/employees/{empId} GET
 3. http://localhost:8080/v1/employees/{empId} DELETE
-```
-## Related Links
-```python
-1. http://localhost:8080/swagger-ui.html
-2. http://localhost:8080/health
-3. http://localhost:8080/info
-4. http://localhost:8080/metrics
+4. http://localhost:8080/v1/employees/{empId}/add POST
 ```
 
-## Java Command
+## Run Command
 
 Please make sure Employees.xml file exiting in your classpath.
 

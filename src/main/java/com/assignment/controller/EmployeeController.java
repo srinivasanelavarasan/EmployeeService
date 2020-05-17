@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.assignment.exception.DuplicateRecordException;
 import com.assignment.exception.EmployeeNotFoundException;
 import com.assignment.model.Employee;
 import com.assignment.model.Employees;
@@ -26,7 +29,7 @@ import com.assignment.service.EmployeeService;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeController {
-	
+
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
@@ -64,7 +67,7 @@ public class EmployeeController {
 	/**
 	 * Gets the employee.
 	 *
-	 * @param empId the emp id
+	 * @param empId       the emp id
 	 * @param httpRequest the http request
 	 * @return the employee
 	 */
@@ -83,7 +86,7 @@ public class EmployeeController {
 	/**
 	 * Delete employee.
 	 *
-	 * @param empId the emp id
+	 * @param empId       the emp id
 	 * @param httpRequest the http request
 	 * @return the response entity
 	 */
@@ -94,6 +97,21 @@ public class EmployeeController {
 		} catch (EmployeeNotFoundException e) {
 			logger.error("Exception Occured in deleteEmployee : {}", e.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/v1/employees/{empId}/add", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<Void> addEmployee(@PathVariable("empId") long empId, @RequestBody Employee employee,
+			HttpServletRequest httpRequest) {
+		try {
+			if (employee.getId() != empId) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			employeeService.addEmployee(empId, employee);
+		} catch (DuplicateRecordException e) {
+			logger.error("Exception Occured in addEmployee : {}", e.getMessage());
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
