@@ -3,7 +3,7 @@ package com.assignment.model;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +11,43 @@ import lombok.NoArgsConstructor;
 /**
  * The Class Employee.
  */
+
+/* (non-Javadoc)
+ * @see java.lang.Object#toString()
+ */
+
+/* (non-Javadoc)
+ * @see java.lang.Object#toString()
+ */
 @Data
+
+/**
+ * Instantiates a new employee.
+ */
+
+/**
+ * Instantiates a new employee.
+ */
 @NoArgsConstructor
+
+/**
+ * Instantiates a new employee.
+ *
+ * @param id the id
+ * @param name the name
+ * @param age the age
+ * @param designation the designation
+ */
+
+/**
+ * Instantiates a new employee.
+ *
+ * @param id the id
+ * @param name the name
+ * @param age the age
+ * @param designation the designation
+ */
 @AllArgsConstructor
-@JacksonXmlRootElement(localName = "employee")
 public class Employee implements Serializable{
 
 	/** The Constant serialVersionUID. */
@@ -35,5 +68,4 @@ public class Employee implements Serializable{
 	/** The designation. */
 	@JacksonXmlProperty
 	private String designation;
-
 }

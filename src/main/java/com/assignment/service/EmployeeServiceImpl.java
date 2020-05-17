@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
+import com.assignment.exception.DuplicateRecordException;
 import com.assignment.exception.EmployeeNotFoundException;
 import com.assignment.model.Employee;
 import com.assignment.util.XMLParser;
@@ -88,8 +89,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		logger.info("addEmployee method EmployeeServiceImpl invoked");
 		try {
 			return XMLParser.addEmployee(XML_FILE_PATH, empId, employee);
-		} catch (Exception e) {
-			throw new EmployeeNotFoundException(e.getMessage());
+		} 
+		catch (Exception e) {
+			throw new DuplicateRecordException(e.getMessage());
 		}
 		
 	}

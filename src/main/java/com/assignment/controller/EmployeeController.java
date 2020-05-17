@@ -56,7 +56,7 @@ public class EmployeeController {
 		Employees employees = new Employees();
 		try {
 			List<Employee> employeeList = employeeService.getAllEmployees();
-			employees.setEmployees(employeeList);
+			employees.setEmployee(employeeList);
 		} catch (EmployeeNotFoundException e) {
 			logger.error("Exception Occured in getAllEmployees : {}", e.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
