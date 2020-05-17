@@ -1,8 +1,52 @@
-# Employee Service
+# Employee Service SpringBoot Application
 
-### Reference Documentation
-This document gives information about the list of apis and related links:
+As part of this application we read, write & edit an existing XML file and also extending its feature.
 
-* swagger url: http://localhost:8080/swagger-ui.html#/
+## Implemented Features
 
+In this SpringBoot Application have implemented the following features
 
+```bash
+1. SpringBoot 2.3 (Latest version)
+2. Java8
+3. Swagger2 Documentation
+4. SpringBoot Actuator Endpoints
+5. Spring AOP
+6. Logger
+7. Global Exception Handler
+8. Filter
+```
+
+## Available APIs
+
+Here is the list of APIs available as part of this SpringBoot Application
+
+```bash
+1. http://localhost:8080/v1/employees GET
+2. http://localhost:8080/v1/employees/{empId} GET
+3. http://localhost:8080/v1/employees/{empId} DELETE
+```
+
+## Java Command
+
+Please make sure Employees.xml file exiting in your classpath.
+
+```python
+java -jar EmployeeService-0.0.1-SNAPSHOT.jar
+```
+
+## Sample XML
+```python
+<employees>
+	<employee id="111">
+		<name>Mohan</name> 
+		<age>25</age> 
+		<designation>Developer</designation> 
+	</employee> 
+	<employee id="222">
+		<name>Anitha</name> 
+		<age>40</age> 
+		<designation>Senior Developer</designation> 
+	</employee> 
+</employees>
+```

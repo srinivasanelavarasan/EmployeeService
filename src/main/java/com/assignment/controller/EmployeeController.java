@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ import com.assignment.service.EmployeeService;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeController {
+	
+	/** The Constant logger. */
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
 	/** The employee service. */
 	private EmployeeService employeeService;
@@ -50,6 +55,7 @@ public class EmployeeController {
 			List<Employee> employeeList = employeeService.getAllEmployees();
 			employees.setEmployees(employeeList);
 		} catch (EmployeeNotFoundException e) {
+			logger.error("Exception Occured in getAllEmployees : {}", e.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(employees, HttpStatus.OK);
@@ -68,6 +74,7 @@ public class EmployeeController {
 		try {
 			employee = employeeService.getEmployeeById(empId);
 		} catch (EmployeeNotFoundException e) {
+			logger.error("Exception Occured in getEmployee : {}", e.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(employee, HttpStatus.OK);
@@ -85,6 +92,7 @@ public class EmployeeController {
 		try {
 			employeeService.deleteEmployee(empId);
 		} catch (EmployeeNotFoundException e) {
+			logger.error("Exception Occured in deleteEmployee : {}", e.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
